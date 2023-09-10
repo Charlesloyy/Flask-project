@@ -1,0 +1,26 @@
+{%extends "secondback.html"%}
+{%block content%}
+ 
+    <article class="media content-section">
+        <img src="{{ url_for('static', filename = 'profile_pic/' + post.author.image_file) }}" alt="##" class="rounded-circle article-img">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a href="{{ url_for('users.user_posts', username=post.author.username)}}" class="mr-2">{{ post.author.username }}</a>
+                <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                {% if post.author == current_user%}
+                <div>
+                    <a href="{{ url_for('posts.update_post', post_id=post.id)}}" class="btn btn-secondary btn-sm mt-1 mb-1">Update</a>
+                    <form action="{{ url_for('posts.delete_post', post_id=post.id)}}" method = "POST">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+
+                    </form>
+                    
+                </div>
+                {%endif%}
+            </div>
+            <h2 class="article-title">{{ post.title}}</h2>
+            <p class="article-content">{{ post.content}}</p>
+        </div>
+    </article>
+    
+{%endblock%}
